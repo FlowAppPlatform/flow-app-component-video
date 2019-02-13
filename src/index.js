@@ -42,9 +42,17 @@ class VideoComponent extends AppComponent {
     this.state = Object.assign(this.state, newState); // merge two states together, and dont lose any parent state properties.
   }
 
+  triggerGraphEvent = () => {
+    const graphId = this.getPropertyData('event');
+    this.getElementProps().onEvent(graphId)
+  }
+
   renderContent() {
     return (
-      <div className="video-container">
+      <div 
+        className="video-container"
+        onMouseOver={this.triggerGraphEvent}
+      >
         <img src="/assets/images/video-cam.svg" />
       </div>
     );
