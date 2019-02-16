@@ -19,8 +19,15 @@ class VideoComponent extends AppComponent {
           categoryDescription: 'Events for the video component',
           properties: [
             {
-              id: 'event',
-              name: 'Events',
+              id: 'load',
+              name: 'Load Event',
+              type: 'graph',
+              options: {},
+              data: null,
+            },
+            {
+              id: 'hover',
+              name: 'Hover Event',
               type: 'graph',
               options: {},
               data: null,
@@ -42,9 +49,21 @@ class VideoComponent extends AppComponent {
     this.state = Object.assign(this.state, newState); // merge two states together, and dont lose any parent state properties.
   }
 
+  componentDidMount() {
+    this.triggerGraphEvent('load');
+  }
+
+  triggerGraphEvent = (eventId) => {
+    const graphId = this.getPropertyData(eventId);
+    this.getElementProps().onEvent(graphId);
+  }
+
   renderContent() {
     return (
-      <div className="video-container">
+      <div 
+        className="video-container"
+        onMouseOver={() => this.triggerGraphEvent('hover')}
+      >
         <img src="/assets/images/video-cam.svg" />
       </div>
     );
